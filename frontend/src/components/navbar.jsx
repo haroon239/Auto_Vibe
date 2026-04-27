@@ -5,9 +5,9 @@ import {NavLink} from 'react-router-dom';
 import  logo from '../assets/logo.png'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
+  { name: 'SELL Product', href: '/Seller', current: true },
+  { name: 'Like Products', href: '/likedproduct', current: false },
+  { name: 'About Website', href: '/About', current: false },
   { name: 'Calendar', href: '#', current: false },
 ]
 
@@ -103,14 +103,25 @@ useEffect(()=>{
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Item>
+                        {({ active }) => (
+                          <NavLink
+                            to={'/Dashboard'}
+                            className={classNames(active ? 'bg-gray-100 font-bold' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            Admin Dashboard
+                          </NavLink>
+                        )}
+                      </Menu.Item>
+                      
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <NavLink
+                            to={'/profile'}
                             className={classNames(active ? 'bg-gray-100 font-bold' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Your Profile
-                          </a>
+                          </NavLink>
                         )}
                       </Menu.Item>
                       <Menu.Item>

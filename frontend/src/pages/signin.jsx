@@ -1,54 +1,72 @@
 import React from "react";
 import "./signin.css";
-import  { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 import { GrValidate } from "react-icons/gr";
 import { MdError } from "react-icons/md";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Signin = () => {
-  const home=useNavigate();
-  const [email, setemail]= useState();
-  const [password,setpassword]=useState();
-	const [validemail, setvalidemail]=useState(false);
+  const home = useNavigate();
+  const [email, setemail] = useState();
+  const [password, setpassword] = useState();
+  const [validemail, setvalidemail] = useState(false);
+  const [alert, setalert] = useState();
+  // const [duplicat, setduplicate] = useState();
+  const [data, setdata] = useState();
 
-	const emailvalidation=(e)=>{
-              setemail(e.target.value);		 
-	}
+  const emailvalidation = (e) => {
+    setemail(e.target.value);
+  };
 
-	useEffect(() => {
-		if (email) {
-		  var pattern = /^[^ ]+@[^ ]+\.[a-z]{3,3}$/;
-		  if (email.match(pattern)) {
-			console.log("true");
-			setvalidemail(true);
-		  } else {
-			console.log("false");
-			setvalidemail(false);
-		  }
-		}
-	  }, [email]);
-
-    const login=async (e)=>{
-      e.preventDefault();
-      const formdata={
-        email:email,
-        password:password
-      }
-      try {
-        await axios.post('http://localhost:6500/signin', formdata).then((res)=>{
-          localStorage.setItem("Token",JSON.stringify(res.data.Token));
-          const token=localStorage.getItem("Token");
-         if(token){
-          console.log("token is stored...");
-            home('/');
-         }
-console.log(res);
-        })
-      } catch (error) {
-        console.log(error);
+  useEffect(() => {
+    if (email) {
+      var pattern = /^[^ ]+@[^ ]+\.[a-z]{3,3}$/;
+      if (email.match(pattern)) {
+        console.log("true");
+        setvalidemail(true);
+      } else {
+        console.log("false");
+        setvalidemail(false);
       }
     }
+  }, [email]);
+
+  const login = async (e) => {
+    e.preventDefault();
+    const formdata = {
+      email: email,
+      password: password,
+    };
+    try {
+      await axios.post("http://localhost:6500/signin", formdata).then((res) => {
+        localStorage.setItem("Token", JSON.stringify(res.data.Token));
+        localStorage.setItem("id", res.data.id);
+        localStorage.setItem("username", res.data.name);
+
+        const token = localStorage.getItem("Token");
+        if (token) {
+          console.log("token is stored...");
+          home("/");
+        }
+        console.log(res);
+      });
+    } catch (error) {
+      console.log(error);
+      if (error.response.status == 401) {
+        setdata(error.response.data);
+        setalert(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setalert(false);
+      console.log("set alert is calling....");
+      // setduplicate();
+    }, 4000);
+  }, [alert]);
   return (
     <div class="h-screen flex">
       <div
@@ -57,15 +75,21 @@ console.log(res);
       >
         <div class="bg-black opacity-20 inset-0 z-0"></div>
         <div class="w-full mx-auto px-20 flex-col items-center space-y-6">
-          <h1 class="text-white font-bold text-4xl font-sans">SignIn AutoVibe</h1>
-          <p class="text-white mt-1">Unlock a world of automotive opportunities! Sign in to your account effortlessly and access exclusive features. Seamlessly manage your listings, track transactions, and connect with the car community.</p>
+          <h1 class="text-white font-bold text-4xl font-sans">
+            SignIn AutoVibe
+          </h1>
+          <p class="text-white mt-1">
+            Unlock a world of automotive opportunities! Sign in to your account
+            effortlessly and access exclusive features. Seamlessly manage your
+            listings, track transactions, and connect with the car community.
+          </p>
           <div class="flex justify-center lg:justify-start mt-6">
-            <a
-              href="#"
-              class="hover:bg-indigo-700 hover:text-white hover:-translate-y-1 transition-all duration-500 bg-white text-indigo-800 mt-4 px-4 py-2 rounded-2xl font-bold mb-2"
+            <NavLink
+              to="/"
+              className="hover:bg-indigo-700 hover:text-white hover:-translate-y-1 transition-all duration-500 bg-white text-indigo-800 mt-4 px-4 py-2 rounded-2xl font-bold mb-2"
             >
               Get Started
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>
@@ -73,7 +97,33 @@ console.log(res);
         <div class="w-full px-8 md:px-32 lg:px-24">
           <form class="bg-white rounded-md shadow-2xl p-5" onSubmit={login}>
             <h1 class="text-gray-800 font-bold text-2xl mb-1">SignIn</h1>
-            <p class="text-sm font-normal text-gray-600 mb-8">Welcome to AutoVibe</p>
+            <p class="text-sm font-normal text-gray-600 mb-8">
+              Welcome to AutoVibe
+            </p>
+
+            {alert ? (
+              <div
+                className="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+                role="alert"
+              >
+                <svg
+                  className="flex-shrink-0 inline w-4 h-4 me-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span className="sr-only">Info</span>
+                <div>
+                  <span className="font-medium">alert! {data} </span>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -98,8 +148,11 @@ console.log(res);
                 autoComplete="off"
                 onChange={emailvalidation}
               />
-                {validemail ?<GrValidate className='text-green-400'/>:<MdError className='text-red-600'/>} 
-
+              {validemail ? (
+                <GrValidate className="text-green-400" />
+              ) : (
+                <MdError className="text-red-600" />
+              )}
             </div>
             <div class="flex items-center border-2 mb-12 py-2 px-3 rounded-2xl ">
               <svg
@@ -119,7 +172,9 @@ console.log(res);
                 type="password"
                 name="password"
                 value={password}
-                onChange={(e)=>{setpassword(e.target.value)}}
+                onChange={(e) => {
+                  setpassword(e.target.value);
+                }}
                 id="password"
                 placeholder="Password"
               />
@@ -135,12 +190,12 @@ console.log(res);
                 Forgot Password ?
               </span>
 
-              <a
-                href="#"
+              <NavLink
+                to="/signup"
                 class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"
               >
                 Don't have an account yet?
-              </a>
+              </NavLink>
             </div>
           </form>
         </div>
