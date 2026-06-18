@@ -1,16 +1,16 @@
 const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('./cloudinary');
 
-const storage = multer.diskStorage({
-    destination: function (req,file,cb){
-        cb(null, 'uploads')
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        asset_folder: 'autovibe',    // ✅ dynamic folder mode requires asset_folder, not folder
+        allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+        transformation: [{ width: 1200, crop: 'limit' }],
     },
-     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() ;
-      cb(null, uniqueSuffix + '-' + file.originalname )
-    }
-})
+});
 
-const upload = multer({ storage: storage })
-
+const upload = multer({ storage: storage });
 
 module.exports = upload;

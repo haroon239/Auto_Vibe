@@ -41,7 +41,7 @@ const Cards = ({ id, name, color, price, image, sold, mileage, transmission, yea
         <NavLink to={`/product/detail/${id}`}>
           <div className="w-full h-48 bg-gray-50 overflow-hidden">
             <img
-              src={`http://localhost:6500/${image}`}
+              src={image || 'https://via.placeholder.com/400x220?text=No+Image'}
               alt={name}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
             />

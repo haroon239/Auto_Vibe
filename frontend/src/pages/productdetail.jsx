@@ -328,7 +328,7 @@ const Productdetail = () => {
                       />
                     ) : image && typeof image === 'string' ? (
                       <img
-                        src={`http://localhost:6500/${image}`}
+                        src={image}
                         alt="preview"
                         className="h-full w-full object-contain rounded-2xl"
                       />
@@ -474,7 +474,7 @@ const Productdetail = () => {
                                      shadow-md flex items-center justify-center hover:scale-110 transition">
                     <FaHeart className="text-gray-300 hover:text-red-500 transition" />
                   </button>
-                  <img src={`http://localhost:6500/${image}`} alt={name}
+                  <img src={image} alt={name}
                     className="w-full aspect-[4/3] object-cover" />
                 </div>
 
@@ -483,7 +483,7 @@ const Productdetail = () => {
                   {[1, 2, 3, 4].map((i) => (
                     <div key={i} className="rounded-xl overflow-hidden border-2 border-transparent
                                             hover:border-blue-500 cursor-pointer transition aspect-square bg-gray-100">
-                      <img src={`http://localhost:6500/${image}`} alt=""
+                      <img src={image} alt=""
                         className="w-full h-full object-cover" />
                     </div>
                   ))}

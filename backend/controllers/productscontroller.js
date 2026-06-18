@@ -3,6 +3,9 @@ const product = require('../models/products');
 
 // ── Create Product ───────────────────────────────────────────
 module.exports.products = async (req, res) => {
+    console.log('=== PRODUCTS CONTROLLER HIT ===');
+    console.log('req.file:', req.file);
+    console.log('req.body:', req.body);
     try {
         console.log('Incoming request body:', req.body);
         console.log('File information:', req.file);
@@ -11,7 +14,7 @@ module.exports.products = async (req, res) => {
             return res.status(400).json({ message: 'Vehicle image is required' });
         }
 
-        const path = req.file.filename;
+        const path = req.file.path; // ✅ Cloudinary returns full hosted URL here, not a filename
         const {
             name, color, category, price, registered, engine,
             number, description, id,
@@ -49,8 +52,9 @@ module.exports.products = async (req, res) => {
             res.status(500).json({ message: 'Failed to store product data' });
         }
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
 
@@ -115,7 +119,7 @@ module.exports.updateproduct = async (req, res) => {
         }
 
         const dynamicImg = findoldimg.image;
-        const path = req.file ? req.file.filename : dynamicImg;
+        const path = req.file ? req.file.path : dynamicImg; // ✅ Cloudinary URL, not filename
 
         const {
             name, color, category, price, registered, engine,

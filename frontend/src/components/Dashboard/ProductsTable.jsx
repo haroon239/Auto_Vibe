@@ -151,7 +151,7 @@ const ProductsTable = () => {
         {paginated.map((p, i) => {
           const badge = getBadge((page - 1) * ITEMS_PER_PAGE + i);
           const imageUrl = p.image
-            ? `http://localhost:6500/${p.image}`
+            ? p.image  // ✅ already a full Cloudinary URL
             : 'https://via.placeholder.com/400x220?text=No+Image';
 
           return (
