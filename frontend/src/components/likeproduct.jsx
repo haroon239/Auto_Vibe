@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 import emptyproduct from '../assets/nolikeproduct.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Cards from './cards';
+import Cards from './Cards';
 
 const Likeproduct = () => {
   const [likeproduct, setlikeproduct] = useState([]);

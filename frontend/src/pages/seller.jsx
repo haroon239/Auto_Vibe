@@ -1,5 +1,5 @@
 import React from 'react'
-import sellingform from '../components/sellingform';
+import sellingform from '../components/SellingForm';
 const Seller = () => {
   return (
     <>

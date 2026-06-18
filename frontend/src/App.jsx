@@ -2,19 +2,19 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
 import Home from "./pages/home";
-import Seller from './components/sellingform'
+import Seller from './components/SellingForm'
 import Productdetail from "./pages/productdetail";
 import Profile from "./pages/profile";
-import Likeproduct from "./components/likeproduct";
-import Product from "./components/product";
+import Likeproduct from "./components/LikeProduct";
+import Product from "./components/Product";
 import Chat from "./pages/chat";
-import SearchProduct from "./pages/searchProduct";
+import SearchProduct from "./pages/SearchProduct";
 import Payment from "./pages/payment";
-import Success from "./components/success"; 
-import Failed from "./components/failed";
+import Success from "./components/Success"; 
+import Failed from "./components/Failed";
 import About from "./pages/about";
 import Dashboard from "./pages/Dashboard";
-import Layout from "./components/layout";
+import Layout from "./components/Layout";
 
 function App() {
   return (
