@@ -2,7 +2,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
 import Home from "./pages/home";
-import Seller from './components/SellingForm'
+import SellingForm from './components/SellingForm'
 import Productdetail from "./pages/productdetail";
 import Profile from "./pages/profile";
 import Likeproduct from "./components/LikeProduct";
@@ -24,7 +24,7 @@ function App() {
     {/* Pages WITH Navbar & Footer */}
     <Route element={<Layout />}>
       <Route path="/" element={<Home />} />
-      <Route path="/seller" element={<Seller />} />
+      <Route path="/seller" element={<SellingForm />} />
       <Route path="/product/detail/:_id" element={<Productdetail />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/likedproduct" element={<Likeproduct />} />

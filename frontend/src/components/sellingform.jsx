@@ -11,7 +11,7 @@ const MIN_PRICE = 10000;
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
-const Sellingform = () => {
+const SellingForm = () => {
   const navigate = useNavigate();
 
   const [image, setimage] = useState('');
@@ -773,4 +773,4 @@ const Sellingform = () => {
   );
 };
 
-export default Sellingform;
+export default SellingForm;
