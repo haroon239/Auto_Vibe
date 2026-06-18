@@ -2,7 +2,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
 import Home from "./pages/home";
-import SellingForm from './components/SellingForm.jsx'
+import SellingForm from './components/SellingForms.jsx'
 import Productdetail from "./pages/productdetail";
 import Profile from "./pages/profile";
 import Likeproduct from "./components/LikeProduct";
