@@ -14,36 +14,36 @@ import Success from "./components/success";
 import Failed from "./components/failed";
 import About from "./pages/about";
 import Dashboard from "./pages/Dashboard";
+import Layout from "./components/layout";
 
 function App() {
   return (
  <BrowserRouter>
- <Routes>
-  <Route path="/" element={<Home/>}></Route>
-  <Route path="/signin" element={<Signin/>}></Route>
-  <Route path="/signup" element={<Signup/>}></Route>
-  <Route path="/seller" element={<Seller/>}></Route>
-  <Route path="/product/detail/:_id" element={<Productdetail/>}></Route>
-  <Route path="/profile" element={<Profile/>}></Route>
-  <Route path="/likedproduct" element={<Likeproduct/>}></Route>
-  <Route path="/home/category/product/:name" element={<Product/>}></Route>
-  <Route path="/chat/:productid" element={<Chat/>}></Route>
-  <Route path="/search" element={<SearchProduct/>}></Route>
-  <Route path="/seller/payments" element={<Payment/>}></Route>
-  <Route path="/success/:packagename" element={<Success/>}></Route>
-  <Route path="/failed" element={<Failed/>}></Route>
-  <Route path="/About" element={<About/>}></Route>
-  <Route path="/Dashboard" element={<Dashboard/>}></Route>
+  <Routes>
 
+    {/* Pages WITH Navbar & Footer */}
+    <Route element={<Layout />}>
+      <Route path="/" element={<Home />} />
+      <Route path="/seller" element={<Seller />} />
+      <Route path="/product/detail/:_id" element={<Productdetail />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/likedproduct" element={<Likeproduct />} />
+      <Route path="/home/category/product/:name" element={<Product />} />
+      <Route path="/search" element={<SearchProduct />} />
+      <Route path="/About" element={<About />} />
+    </Route>
 
+    {/* Pages WITHOUT Navbar & Footer */}
+    <Route path="/signin" element={<Signin />} />
+    <Route path="/signup" element={<Signup />} />
+    <Route path="/chat/:productid" element={<Chat />} />
+    <Route path="/seller/payments" element={<Payment />} />
+<Route path="/success/:packageName/:userId" element={<Success />} />
+    <Route path="/failed" element={<Failed />} />
+    <Route path="/Dashboard" element={<Dashboard />} />
 
-
-
-
-  
-
- </Routes>
- </BrowserRouter>
+  </Routes>
+</BrowserRouter>
   )
 }
 

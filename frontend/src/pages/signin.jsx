@@ -3,17 +3,18 @@ import "./signin.css";
 import { useState, useEffect } from "react";
 import { GrValidate } from "react-icons/gr";
 import { MdError } from "react-icons/md";
-import axios from "axios";
+// import axios from "axios";
+import api from "../utils/axios";
+
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Signin = () => {
   const home = useNavigate();
-  const [email, setemail] = useState();
-  const [password, setpassword] = useState();
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
   const [validemail, setvalidemail] = useState(false);
-  const [alert, setalert] = useState();
-  // const [duplicat, setduplicate] = useState();
-  const [data, setdata] = useState();
+ const [alert, setalert] = useState(false);
+const [data, setdata] = useState("");
 
   const emailvalidation = (e) => {
     setemail(e.target.value);
@@ -39,51 +40,58 @@ const Signin = () => {
       password: password,
     };
     try {
-      await axios.post("http://localhost:6500/signin", formdata).then((res) => {
-        localStorage.setItem("Token", JSON.stringify(res.data.Token));
-        localStorage.setItem("id", res.data.id);
-        localStorage.setItem("username", res.data.name);
-
-        const token = localStorage.getItem("Token");
-        if (token) {
-          console.log("token is stored...");
-          home("/");
-        }
-        console.log(res);
-      });
+      const res = await api.post("/users/signin", formdata);
+      localStorage.setItem("Token", JSON.stringify(res.data.token));
+      localStorage.setItem("id", res.data.id);
+      localStorage.setItem("username", res.data.name);
+      console.log(res.data);
+      if (res.data.token) {
+        home("/");
+      }
     } catch (error) {
       console.log(error);
-      if (error.response.status == 401) {
-        setdata(error.response.data);
+      if (error.response) {
+        setdata(error.response.data.response);
+        setalert(true);
+      } else {
+        setdata("Something went wrong. Try again.");
         setalert(true);
       }
     }
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setalert(false);
-      console.log("set alert is calling....");
-      // setduplicate();
-    }, 4000);
-  }, [alert]);
+
+
+
+
+ useEffect(() => {
+    if (alert) {
+        const timer = setTimeout(() => {
+            setalert(false);
+        }, 4000);
+        return () => clearTimeout(timer);
+    }
+}, [alert]);
+
+
+
   return (
-    <div class="h-screen flex">
+    <div className="h-screen flex">
       <div
-        class="hidden lg:flex w-full lg:w-1/2 login_img_section
+        className="hidden lg:flex w-full lg:w-1/2 login_img_section
               justify-around items-center"
       >
-        <div class="bg-black opacity-20 inset-0 z-0"></div>
-        <div class="w-full mx-auto px-20 flex-col items-center space-y-6">
-          <h1 class="text-white font-bold text-4xl font-sans">
+        <div className="bg-black opacity-20 inset-0 z-0"></div>
+        <div className="w-full mx-auto px-20 flex-col items-center space-y-6">
+          <h1 className="text-white font-bold text-4xl font-sans">
             SignIn AutoVibe
           </h1>
-          <p class="text-white mt-1">
+          <p className="text-white mt-1">
             Unlock a world of automotive opportunities! Sign in to your account
             effortlessly and access exclusive features. Seamlessly manage your
             listings, track transactions, and connect with the car community.
           </p>
-          <div class="flex justify-center lg:justify-start mt-6">
+          <div className="flex justify-center lg:justify-start mt-6">
             <NavLink
               to="/"
               className="hover:bg-indigo-700 hover:text-white hover:-translate-y-1 transition-all duration-500 bg-white text-indigo-800 mt-4 px-4 py-2 rounded-2xl font-bold mb-2"
@@ -93,11 +101,11 @@ const Signin = () => {
           </div>
         </div>
       </div>
-      <div class="flex w-full lg:w-1/2 justify-center items-center bg-white space-y-8">
-        <div class="w-full px-8 md:px-32 lg:px-24">
-          <form class="bg-white rounded-md shadow-2xl p-5" onSubmit={login}>
-            <h1 class="text-gray-800 font-bold text-2xl mb-1">SignIn</h1>
-            <p class="text-sm font-normal text-gray-600 mb-8">
+      <div className="flex w-full lg:w-1/2 justify-center items-center bg-white space-y-8">
+        <div className="w-full px-8 md:px-32 lg:px-24">
+          <form className="bg-white rounded-md shadow-2xl p-5" onSubmit={login}>
+            <h1 className="text-gray-800 font-bold text-2xl mb-1">SignIn</h1>
+            <p className="text-sm font-normal text-gray-600 mb-8">
               Welcome to AutoVibe
             </p>
 
@@ -124,10 +132,10 @@ const Signin = () => {
               ""
             )}
 
-            <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
+            <div className="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-gray-400"
+                className="h-5 w-5 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -141,7 +149,7 @@ const Signin = () => {
               </svg>
               <input
                 id="email"
-                class=" pl-2 w-full outline-none border-none"
+                className=" pl-2 w-full outline-none border-none"
                 type="email"
                 name="email"
                 placeholder="Email Address"
@@ -154,10 +162,10 @@ const Signin = () => {
                 <MdError className="text-red-600" />
               )}
             </div>
-            <div class="flex items-center border-2 mb-12 py-2 px-3 rounded-2xl ">
+            <div className="flex items-center border-2 mb-12 py-2 px-3 rounded-2xl ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-gray-400"
+                className="h-5 w-5 text-gray-400"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -168,7 +176,7 @@ const Signin = () => {
                 />
               </svg>
               <input
-                class="pl-2 w-full outline-none border-none"
+                className="pl-2 w-full outline-none border-none"
                 type="password"
                 name="password"
                 value={password}
@@ -181,18 +189,18 @@ const Signin = () => {
             </div>
             <button
               type="submit"
-              class="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"
+              className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"
             >
               Login
             </button>
-            <div class="flex justify-between mt-4">
-              <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">
+            <div className="flex justify-between mt-4">
+              <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">
                 Forgot Password ?
               </span>
 
               <NavLink
                 to="/signup"
-                class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"
+                className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"
               >
                 Don't have an account yet?
               </NavLink>

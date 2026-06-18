@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 import img1 from '../assets/hero_section.jpg';
 import img2 from '../assets/nolikeproduct.png';
 import Cards from './cards';
-import axios from 'axios';
+import api from '../utils/axios'
+
 import notfound from '../assets/not found.png'
 import { useParams } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ const [relatedProduct, setrelatedProduct]=useState([]);
 useEffect(()=>{
 const getproduct=async ()=>{
   try {
-    const product=axios.get('http://localhost:6500/getproducts').then((res)=>{
+    const product=api.get("/products/getproducts").then((res)=>{
         const apidata=res.data.data;
         const relatedproduct=apidata.filter((item)=>item.vehicleCategory == Category && item._id!==param._id)
         setrelatedProduct(relatedproduct)

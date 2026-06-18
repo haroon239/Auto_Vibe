@@ -3,9 +3,11 @@ import noavailable from "../assets/not-available.png";
 import { NavLink, useParams } from "react-router-dom";
 import notfound from '../assets/not found.png'
 import Cards from "./cards";
-import axios from "axios";
+import api from '../utils/axios'
+
 
 const Product = () => {
+  const userId = localStorage.getItem("id");
   const { name } = useParams();
   console.log(name);
   const [data, setData] = useState([]);
@@ -14,11 +16,11 @@ const Product = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data={product:name}
+      const data = { product: name }
       try {
-        const response = await axios.get("http://localhost:6500/getproducts");
-       
-        
+        const response = await api.get("/products/getproducts");
+
+
         setData(response.data.data);
       } catch (error) {
         console.log(error);
@@ -36,19 +38,22 @@ const Product = () => {
     }
   }, [name, data]);
 
-  // const whishlistfun = async (productId) => {
-  //   const userId = localStorage.getItem("id");
-  //   const productid = productId;
-  //   console.log("whishlistt....", productId, "userid", userId);
-  //   const data = {
-  //     userid: userId,
-  //     Product: productid,
-  //   };
-  //   console.log("whishlistt....", data);
-  //   await axios.post("http://localhost:6500/likedproduct", data).then((res) => {
-  //     console.log(res, 38);
-  //   });
-  // };
+  // for liked product
+
+  const whishlistfun = async (productId) => {
+    const data = { userid: userId, Product: productId };
+    await api.post("/users/likedproduct", data).then((res) => {
+      console.log(res, 38);
+    });
+  };
+  // for product click behaviour
+  const productclick = async (id, behave) => {
+    const body = { userId, product: id, behaviour: behave };
+    await api.post('/productclick', body).then((res) => {
+      console.log(res, "click product");
+    });
+  };
+
 
   // Check if data is not yet initialized
   if (!product) {
@@ -78,13 +83,16 @@ const Product = () => {
                     price={items.vehiclePrice}
                     image={items.image}
                     sold={items.sold}
-                    // wishlist={whishlistfun}
+                    onWishlist={() => {
+                      whishlistfun(items._id)
+                      productclick(items._id, "like")
+                    }} // You can replace this with actual logic to determine if the product is liked
                   />
                 );
-              }):
-              <img src={notfound} alt="product not found"  />
-              
-              }
+              }) :
+              <img src={notfound} alt="product not found" />
+
+            }
           </div>
         </div>
       </div>

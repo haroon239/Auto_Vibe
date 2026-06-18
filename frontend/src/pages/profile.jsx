@@ -1,4 +1,5 @@
-import axios from 'axios'
+// import axios from 'axios'
+import api from "../utils/axios";
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import noavailable from '../assets/not-available.png';
@@ -8,7 +9,7 @@ const [data,setdata]=useState([]);
 
     const profileproduct=async ()=>{
     const userid=localStorage.getItem('id');
-await axios.get(`http://localhost:6500/products/${userid}`).then((res)=>{
+await api.get(`/products/${userid}`).then((res)=>{
      console.log(res.data.data);
      setdata(res.data.data);
 })

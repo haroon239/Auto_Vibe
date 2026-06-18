@@ -1,75 +1,133 @@
-import React, { useEffect } from 'react'
-import noavailable from '../assets/not-available.png';
-import { IoIosHeart } from "react-icons/io";
-import { NavLink } from 'react-router-dom';
-import axios from 'axios';
-import sold2 from "../assets/sold2.png"
-// import { ToastContainer, toast } from 'react-toastify';
-//   import 'react-toastify/dist/ReactToastify.css';
+import { NavLink } from 'react-router-dom'
+import { IoIosHeart } from 'react-icons/io'
+import api from '../utils/axios'
+import sold2 from '../assets/sold2.png' // keep your existing import
 
-const Cards = ({ id, name, color, price, image, sold }) => { // Destructure wishlist from props
-  const userId = localStorage.getItem("id");
-
-const whishlistfun = async (productId) => {
-
-  // toast("like product");
-
-  const productid = productId;
-  console.log("whishlistt....", productId, "userid", userId);
-  const data = {
-    userid: userId,
-    Product: productid,
-  };
-  console.log("whishlistt....", data);
-  await axios.post("http://localhost:6500/likedproduct", data).then((res) => {
-    console.log(res, 38);
-  });
-
-};
+const Cards = ({ id, name, color, price, image, sold, mileage, transmission, year, onWishlist, isLiked }) => {
 
 
 
-const productclick=async (id,behave)=>{
-  console.log('hello',behave);
-  const body={
-    userId:userId,
-    product:id,
-    behaviour:behave
-  }
-await axios.post('http://localhost:6500/productclick',body).then((res)=>{
-  console.log(res, "click product");
-})
-}
+
   return (
-    <div key={id} className="relative " >
-      <div className='w-8 h-8 rounded-full flex items-center justify-center text-center absolute top-2 right-2 border-solid border-2 border-black bg-yellow-300' onClick={()=>{whishlistfun(id); productclick(id,"like")}}>
-        <IoIosHeart className="text-white hover:text-red-500 text-2xl" />
-      </div>
-      {sold && <div className='w-[62px] h-[45px] rounded-sm flex items-center justify-center text-center absolute top-1 left-0 border-solid border-2  bg-yellow-300' onClick={()=>whishlistfun(id)}>
-       <img src={sold2} alt="" />
-      </div>}
-      <div onClick={() => productclick(id,"click")} className="aspect-h-1 p-1 aspect-w-1 w-full overflow-hidden rounded-md hover:bg-gray-200 lg:aspect-none lg:h-[200px]  ">
-        <NavLink to={`/product/detail/${id}`}>
-          <img 
-            src={`http://localhost:6500/${image}`}
-            alt={noavailable}
-            className="h-full w-full object-center object-fill "
+    <div className="relative bg-white rounded-2xl border border-gray-100 shadow-sm
+                    hover:shadow-lg hover:-translate-y-1 transition-all duration-300
+                    overflow-hidden flex flex-col">
+
+      {/* ── IMAGE AREA ── */}
+      <div className="relative">
+
+        {/* Badge — Sold / Certified */}
+        {sold && (
+          <div className="absolute top-3 left-3 z-10 bg-[#0a1f5c] text-white
+                          text-[10px] font-bold uppercase tracking-wider
+                          px-2.5 py-1 rounded-md">
+            Certified Pre-Owned
+          </div>
+        )}
+
+        {/* Wishlist Heart Button */}
+        <button
+          onClick={onWishlist}
+          className="absolute top-3 right-3 z-10 w-8 h-8 bg-white rounded-full shadow-md
+                 flex items-center justify-center
+                 hover:scale-110 transition-transform duration-200"
+        >
+          <IoIosHeart className={`text-lg transition-colors
+        ${isLiked ? 'text-red-500' : 'text-gray-300 hover:text-red-500'}`}
           />
+        </button>
+
+        {/* Car Image */}
+        <NavLink to={`/product/detail/${id}`}>
+          <div className="w-full h-48 bg-gray-50 overflow-hidden">
+            <img
+              src={`http://localhost:6500/${image}`}
+              alt={name}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
         </NavLink>
       </div>
-      <div className="mt-4 flex justify-between">
-        <div>
-          <h3 className="text-sm text-gray-700">
+
+      {/* ── CARD BODY ── */}
+      <div className="p-4 flex flex-col gap-3 flex-1">
+
+        {/* Name + Price */}
+        <div className="flex items-start justify-between gap-2">
+          <div>
             <NavLink to={`/product/detail/${id}`}>
-              <span aria-hidden="true" className="absolute" />
-              {name}
+              <h3 className="text-[#0a1f5c] font-bold text-base hover:text-blue-600 transition-colors">
+                {name}
+              </h3>
             </NavLink>
-          </h3>
-          <p className="mt-1 text-sm text-gray-500">{color}</p>
+            <p className="text-gray-400 text-[11px] uppercase tracking-wider mt-0.5">
+              {color}
+            </p>
+          </div>
+          <div className="text-right flex-shrink-0">
+            <p className="text-[#0a1f5c] font-bold text-lg leading-none">${price}</p>
+            <p className="text-gray-400 text-xs mt-0.5">/day</p>
+          </div>
         </div>
-        <p className="text-sm font-medium text-gray-900">{price}$</p>
+
+        {/* Divider */}
+        <hr className="border-gray-100" />
+
+        {/* Specs Grid */}
+        <div className="grid grid-cols-2 gap-2">
+          <div className="flex flex-col">
+            <span className="text-gray-400 text-[10px] uppercase tracking-wider">Color</span>
+            <span className="text-gray-700 text-xs font-medium mt-0.5">{color}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-gray-400 text-[10px] uppercase tracking-wider">Mileage</span>
+            <span className="text-gray-700 text-xs font-medium mt-0.5">
+              {mileage ? `${mileage} mi` : 'N/A'}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-gray-400 text-[10px] uppercase tracking-wider">Transmission</span>
+            <span className="text-gray-700 text-xs font-medium mt-0.5">
+              {transmission || 'Automatic'}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-gray-400 text-[10px] uppercase tracking-wider">Year</span>
+            <span className="text-gray-700 text-xs font-medium mt-0.5">
+              {year || '2024'}
+            </span>
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-2 mt-1">
+          <NavLink
+            to={`/product/detail/${id}`}
+
+            className="flex-1"
+          >
+            <button className="w-full bg-[#0a1f5c] hover:bg-blue-700 text-white
+                               text-sm font-semibold py-2.5 rounded-xl
+                               transition-all duration-200 active:scale-95">
+              View Details
+            </button>
+          </NavLink>
+
+          {/* Compare Button */}
+          <button
+            className="w-10 h-10 border border-gray-200 rounded-xl flex items-center
+                       justify-center text-gray-400 hover:border-blue-500 hover:text-blue-500
+                       transition-all duration-200 flex-shrink-0"
+            title="Compare"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
+          </button>
+        </div>
+
       </div>
-      {/* <ToastContainer /> */}
     </div>
   )
 }

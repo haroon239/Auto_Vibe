@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import notfound from '../assets/not found.png'
 import Cards from '../components/cards';
-
-import axios from 'axios';
+import api from "../utils/axios";
+// import axios from 'axios';
 
 const SearchProduct = () => {
   const [search, setsearch]=useSearchParams();
@@ -24,7 +24,7 @@ const SearchProduct = () => {
           maxprice:maxprice
         }       
        console.log(data);
-        await  axios.get(`http://localhost:6500/search?name=${name}&city=${city}&minprice=${minprice}&maxprice=${maxprice}`).then((res)=>{
+        await  api.get(`/products/search?name=${name}&city=${city}&minprice=${minprice}&maxprice=${maxprice}`).then((res)=>{
           console.log(res.data, "searchproduct");
           setsearchProduct(res.data);
         })

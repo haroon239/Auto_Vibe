@@ -5,21 +5,23 @@ import { IoMdFingerPrint } from "react-icons/io";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { GrValidate } from "react-icons/gr";
 import { MdError } from "react-icons/md";
-import axios from "axios";
+// import axios from "axios";
+import api from "../utils/axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import { data } from "autoprefixer";
 
 const Signup = () => {
-  const Signin = useNavigate();
-  const [email, setemail] = useState();
-  const [fullname, setfullname] = useState();
-  const [username, setusername] = useState();
-  const [password, setpassword] = useState();
+  const navigate = useNavigate();
+
+  const [email, setemail] = useState("");
+  const [fullname, setfullname] = useState("");
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
   const [validemail, setvalidemail] = useState(false);
-  const [validfullname, setvalidfullname] = useState();
-  const [validusername, setvalidusername] = useState();
-  const [duplicat, setduplicate] = useState();
-  const [alert, setalert] = useState();
+  const [validfullname, setvalidfullname] = useState(false);
+  const [validusername, setvalidusername] = useState(false);
+  const [duplicat, setduplicate] = useState("");
+  const [alert, setalert] = useState(false);
 
   const emailvalidation = (e) => {
     setemail(e.target.value);
@@ -66,45 +68,34 @@ const Signup = () => {
   useEffect(() => {
     if (duplicat) {
       setalert(true);
-
       const timer = setTimeout(() => {
         setalert(false);
-        setduplicate();
+        setduplicate("");
       }, 2000);
-
-      // Clear the timeout if the component unmounts before the timeout completes
+      return () => clearTimeout(timer); // cleanup
     }
   }, [duplicat]);
 
+
   const registered = async (e) => {
     e.preventDefault();
-    const formdata = {
-      fullname: fullname,
-      username: username,
-      email: email,
-      password: password,
-    };
-    console.log("submit successfull", formdata);
-    if (validemail) {
-      try {
-        await axios
-          .post("http://localhost:6500/signup", formdata)
-          .then((res) => {
-            console.log(res);
-            if (res.data.status == 200) {
-              Signin("/signin");
-            }
-            if (
-              res.data.code === 11000 &&
-              res.data.keyPattern &&
-              res.data.keyValue
-            ) {
-              setduplicate(JSON.stringify(res.data.keyValue));
-              console.log("this data is already exist : ", res.data.keyValue);
-            }
-          });
-      } catch (error) {
-        console.error(error);
+    const formdata = { fullname, username, email, password };
+
+    if (!validemail) return;
+
+    try {
+      const res = await api.post("/users/signup", formdata);
+      if (res.data.status == 200) {
+        navigate("/signin");
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response && error.response.status === 409) {
+        setduplicate(error.response.data.response);
+        setalert(true);
+      } else {
+        setduplicate("Something went wrong. Try again.");
+        setalert(true);
       }
     }
   };
@@ -223,12 +214,10 @@ const Signup = () => {
             Registration
           </button>
           {/* <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Forgot Password ?</span> */}
-          <NavLink to="/signin">
-            {" "}
-            <button className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">
-              SignIn
-            </button>
-          </NavLink>
+          <button onClick={() => navigate("/signin")}
+            className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">
+            SignIn
+          </button>
         </form>
       </div>
     </div>
