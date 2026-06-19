@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import img1 from '../assets/hero_section.jpg';
 import img2 from '../assets/nolikeproduct.png';
-import Cards from './Cards';
+import Cards from './Cardss';
 import api from '../utils/axios'
 
 import notfound from '../assets/not found.png'

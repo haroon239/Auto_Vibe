@@ -1,20 +1,20 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Signin from "./pages/signin";
-import Signup from "./pages/signup";
-import Home from "./pages/home";
-import SellingForm from './components/SellingForm.jsx'
-import Productdetail from "./pages/productdetail";
-import Profile from "./pages/profile";
-import Likeproduct from "./components/LikeProduct";
-import Product from "./components/Product";
-import Chat from "./pages/chat";
-import SearchProduct from "./pages/SearchProduct";
-import Payment from "./pages/payment";
-import Success from "./components/Success"; 
-import Failed from "./components/Failed";
-import About from "./pages/about";
-import Dashboard from "./pages/Dashboard";
-import Layout from "./components/Layout";
+import Signin from "./pages/signin.jsx";
+import Signup from "./pages/signup.jsx";
+import Home from "./pages/home.jsx";
+import SellingForm from './components/SellingForms.jsx'
+import Productdetail from "./pages/productdetail.jsx";
+import Profile from "./pages/profile.jsx";
+import Likeproduct from "./components/LikeProducts.jsx";
+import Product from "./components/Products.jsx";
+import Chat from "./pages/chat.jsx";
+import SearchProduct from "./pages/SearchProduct.jsx";
+import Payment from "./pages/payment.jsx";
+import Success from "./components/Successs.jsx"; 
+import Failed from "./components/Faileds.jsx";
+import About from "./pages/about.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Layout from "./components/Layouts.jsx";
 
 function App() {
   return (

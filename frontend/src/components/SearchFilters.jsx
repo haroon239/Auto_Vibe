@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import Product from './Product.jsx';
+import Product from './Products.jsx';
 import { NavLink } from 'react-router-dom';
 
 const SearchFilter = () => {
