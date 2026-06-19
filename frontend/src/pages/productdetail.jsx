@@ -10,7 +10,7 @@ import { IoMail } from "react-icons/io5";
 import { BsCalendar3 } from "react-icons/bs";
 import { GiGearStick } from "react-icons/gi";
 import { MdLocationOn } from "react-icons/md";
-import Relatedproduct from "../Componentss/RelatedProducts";
+import Relatedproduct from "../Components/RelatedProduct";
 
 const Productdetail = () => {
   const params = useParams();

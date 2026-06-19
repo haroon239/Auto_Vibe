@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import noavailable from "../assets/not-available.png";
 import { NavLink, useParams } from "react-router-dom";
 import notfound from '../assets/not found.png'
-import Cards from "./Cardss";
+import Cards from "./Cards";
 import api from '../utils/axios'
 
 

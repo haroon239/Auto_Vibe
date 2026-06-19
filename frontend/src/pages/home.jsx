@@ -1,12 +1,12 @@
 import React from 'react'
-import Navbar from '../Componentss/Navbars'
-import Herosection from '../Componentss/HeroSections'
-import Product from '../Componentss/Products'
-import SearchFilter from '../Componentss/SearchFilters'
-import Category from '../Componentss/Categorys'
-import PricingSection from '../Componentss/PricingSections'
-import Testimonials from '../Componentss/Testimoialss'
-import HowItWorks from '../Componentss/HowItWorkss'
+import Navbar from '../Components/Navbar'
+import Herosection from '../Components/HeroSection'
+import Product from '../Components/Product'
+import SearchFilter from '../Components/SearchFilter'
+import Category from '../Components/Category'
+import PricingSection from '../Components/PricingSection'
+import Testimonials from '../Components/Testimoials'
+import HowItWorks from '../Components/HowItWorks'
 const Home = () => {
   return (
     <div>
