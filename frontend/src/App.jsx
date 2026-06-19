@@ -8,7 +8,7 @@ import Profile from "./pages/profile.jsx";
 import Likeproduct from "./Components/LikeProduct.jsx";
 import Product from "./Components/Product.jsx";
 import Chat from "./pages/chat.jsx";
-import SearchProduct from "./pages/SearchProduct.jsx";
+import SearchProduct from "./pages/searchProduct.jsx";
 import Payment from "./pages/payment.jsx";
 import Success from "./Components/Success.jsx"; 
 import Failed from "./Components/Failed.jsx";

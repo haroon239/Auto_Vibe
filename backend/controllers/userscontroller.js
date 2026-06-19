@@ -232,15 +232,12 @@ module.exports.AdminDashboard = async (req, res) => {
 
             const payments = await payment.find();
             const totalRevenue = payments.reduce((sum, p) => sum + (p.price || 0), 0);
-            if (revenue.length == 0) {
-                revenue = 0
-            }
 
             const totalusers = await users.countDocuments();
             const totalseller = await users.find({ behaviour: "seller" }).countDocuments();
             const products = await product.countDocuments();
             const soldproduct = await product.find({ sold: true }).count();
-            return res.send({ message: "This is Admin", status: 200, data: isAdmin, registerduser: totalusers, Seller: totalseller, product: products, soldproduct: soldproduct, revenue: revenue });
+            return res.send({ message: "This is Admin", status: 200, data: isAdmin, registerduser: totalusers, Seller: totalseller, product: products, soldproduct: soldproduct, revenue: totalRevenue });
         } else {
             return res.send({ message: "This is Not Admin", data: isAdmin, status: 406 });
         }

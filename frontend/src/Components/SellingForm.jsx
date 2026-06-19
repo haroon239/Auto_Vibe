@@ -209,11 +209,10 @@ const SellingForm = () => {
           const product = await api.post('/products', formdata, config);
 
           if (product.status === 201) {
-            const updateProduct = await api.patch(
-              `/products/updateproduct/${userId}`
-            );
+            const updateUser = await api.patch(`/users/user/${userId}`);
 
-            if (updateProduct.status === 200) {
+            if (updateUser.status === 200) {
+              toast.success('Listing submitted successfully!');
               navigate('/');
             }
           }
@@ -224,7 +223,16 @@ const SellingForm = () => {
         navigate('/seller/payments');
       }
     } catch (error) {
-      console.log(error);
+      const status = error.response?.status;
+      if (status === 404) {
+        navigate('/seller/payments');
+      } else if (status === 403) {
+        toast.error(error.response?.data?.response || 'Your package has expired. Please renew.');
+        navigate('/seller/payments');
+      } else {
+        toast.error(error.response?.data?.message || error.response?.data?.response || 'Failed to submit listing.');
+      }
+      console.error(error);
     } finally {
       setloading(false);
     }

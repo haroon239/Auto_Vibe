@@ -26,8 +26,8 @@ module.exports.paymentintegrate = async (req, res) => {
             }],
             mode: 'payment',
             // ✅ pass userId in success URL
-            success_url: `http://localhost:5173/success/${packageName}/${userId}`,
-            cancel_url:  'http://localhost:5173/failed',
+            success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/success/${packageName}/${userId}`,
+            cancel_url:  `${process.env.FRONTEND_URL || 'http://localhost:5173'}/failed`,
         });
 
         // ✅ return sessionId correctly

@@ -1,11 +1,10 @@
 import React from 'react'
-import sellingform from '../components/SellingForm';
+import SellingForm from '../Components/SellingForm';
+
 const Seller = () => {
   return (
-    <>
-    <sellingform/>
-    </>
-  )
-}
+    <SellingForm />
+  );
+};
 
 export default Seller
