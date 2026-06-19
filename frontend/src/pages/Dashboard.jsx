@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Dashboard/Sidebar';
-import TopBar from '../components/Dashboard/TopBar';
-import Overview from '../components/dashboard/Overview';
-import UsersTable from '../components/dashboard/UsersTable';
-import ProductsTable from '../components/dashboard/ProductsTable';
-import PackageMonitor from '../components/dashboard/PackageMonitor';
-import PaymentsTable from '../components/dashboard/PaymentsTable';
+import Sidebar from '../Componentss/Dashboard/Sidebar';
+import TopBar from '../Componentss/Dashboard/TopBar';
+import Overview from '../Componentss/dashboard/Overview';
+import UsersTable from '../Componentss/dashboard/UsersTable';
+import ProductsTable from '../Componentss/dashboard/ProductsTable';
+import PackageMonitor from '../Componentss/dashboard/PackageMonitor';
+import PaymentsTable from '../Componentss/dashboard/PaymentsTable';
 
 const Dashboard = () => {
   const [activePage, setActivePage] = useState('overview');

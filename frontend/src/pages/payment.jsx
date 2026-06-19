@@ -2,7 +2,7 @@ import React from 'react'
 import {loadStripe} from '@stripe/stripe-js';
 // import axios from 'axios';
 import api from "../utils/axios";
-import PricingSection from '../components/PricingSections';
+import PricingSection from '../Componentss/PricingSections';
 const Payment = () => {
 
 

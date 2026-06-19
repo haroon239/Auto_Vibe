@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import notfound from '../assets/not found.png'
-import Cards from '../components/Cardss';
+import Cards from '../Componentss/Cardss';
 import api from "../utils/axios";
 // import axios from 'axios';
 
