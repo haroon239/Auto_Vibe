@@ -5,7 +5,7 @@ import BMW from '../assets/BMW.png';
 import Honda from '../assets/Honda.png';
 import Hyundai from '../assets/hyundai.png';
 import Isuzu from '../assets/Isuzu.png';
-import Kia from '../assets/Kia.png';
+import Kia from '../assets/kia.png';
 import mercedes from '../assets/mercedes.png';
 import MG from '../assets/MG.png';
 import Suzuki from '../assets/Suzuki.png';

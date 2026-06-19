@@ -8,7 +8,6 @@ import { MdError } from "react-icons/md";
 // import axios from "axios";
 import api from "../utils/axios";
 import { NavLink, useNavigate } from "react-router-dom";
-import { data } from "autoprefixer";
 
 const Signup = () => {
   const navigate = useNavigate();
