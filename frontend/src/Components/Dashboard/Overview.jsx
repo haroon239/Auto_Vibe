@@ -193,7 +193,7 @@ const Overview = () => {
                 <tr key={i} className="text-gray-700">
                   <td className="py-2.5">
                     <img
-                      src={p.image ? `http://localhost:6500/uploads/${p.image}` : 'https://via.placeholder.com/40x30?text=Car'}
+                      src={p.image ? p.image : 'https://via.placeholder.com/40x30?text=Car'}
                       alt={p.vehicleName}
                       className="w-12 h-8 object-cover rounded-md"
                     />
